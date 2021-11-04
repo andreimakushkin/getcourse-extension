@@ -14,8 +14,8 @@ jobs:
       - uses: ncipollo/release-action@v1
       - uses: appleboy/telegram-action@master
         with:
-          artifacts: "release.tar.gz,foo/*.txt"
-          bodyFile: "body.md"
+#          artifacts: "release.tar.gz,foo/*.txt"
+#          bodyFile: "body.md"
           type: 'zip'
           filename: 'release.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
