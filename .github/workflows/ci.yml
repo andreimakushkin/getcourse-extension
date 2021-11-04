@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - env:
+          VERSION_PREFIX: MyPrefix
       - name: Checkout
         uses: actions/checkout@master
       - name: Archive Release
@@ -15,7 +17,7 @@ jobs:
         with:
           type: 'zip'
           filename: |
-            'release-${{ github.actor }}.zip'
+            release-$VERSION_PREFIX.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
       - name: Notify on telegram
         uses: appleboy/telegram-action@master
@@ -23,8 +25,8 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           document: |
-            './release-${{ github.actor }}.zip'
+            ./release-$VERSION_PREFIX.zip
           message: |
             ${{ github.actor }} created release:
-            Version: ${{ github.event.release.tag_name }}
+            Version: release-$VERSION_PREFIX.zip
 
