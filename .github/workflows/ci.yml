@@ -1,0 +1,31 @@
+name: Create release
+on:
+  release:
+    types: [published]
+
+env:
+  RELEASE_VERSION: ${{ github.event.release.tag_name }}
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: getcourse-ext-${{ env.RELEASE_VERSION }}.zip
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+      - name: Notify on telegram
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: ./getcourse-ext-${{ env.RELEASE_VERSION }}.zip
+          message: |
+            New release of Getcourse Chrome Extention was released by ${{ github.actor }}
+            Version: ${{ env.RELEASE_VERSION }}
+
