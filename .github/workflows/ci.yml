@@ -1,8 +1,22 @@
 name: telegram message
-on: [push]
+on:
+  push:
+    branches:
+      - dev
 jobs:
 
   build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: 'release.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+
+  notify:
     name: Build
     runs-on: ubuntu-latest
     steps:
@@ -11,6 +25,7 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          document: ./release.zip
           message: |
             ${{ github.actor }} created commit:
             Commit message: ${{ github.event.commits[0].message }}
