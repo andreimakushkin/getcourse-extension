@@ -1,12 +1,10 @@
 name: Create release
 on:
-  push:
-    branches:
-      - dev
+  release:
+    types: [published]
 
 env:
-  VERSION_PREFIX: MyPrefix
-  VERSION_NAME: ${{ github.event.release.tag_name }}
+  RELEASE_VERSION: ${{ github.event.release.tag_name }}
 
 jobs:
 
@@ -19,15 +17,15 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: release-${{ env.VERSION_PREFIX }}.zip
+          filename: getcourse-ext-${{ env.RELEASE_VERSION }}.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
       - name: Notify on telegram
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          document: ./release-${{ env.VERSION_PREFIX }}.zip
+          document: ./getcourse-ext-${{ env.RELEASE_VERSION }}.zip
           message: |
-            ${{ github.actor }} created release:
-            Version: release-${{ env.VERSION_PREFIX }}.zip
+            New release of Getcourse Chrome Extention was released by ${{ github.actor }}
+            Version: ${{ env.RELEASE_VERSION }}
 
