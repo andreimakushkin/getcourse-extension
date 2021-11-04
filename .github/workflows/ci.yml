@@ -8,17 +8,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@master
       - name: Archive Release
-      - uses: thedoctor0/zip-release@master
-      - uses: ncipollo/release-action@v1
-      - uses: appleboy/telegram-action@master
+        uses: thedoctor0/zip-release@master
         with:
-#          artifacts: "release.tar.gz,foo/*.txt"
-#          bodyFile: "body.md"
           type: 'zip'
           filename: 'release.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
+      - name: Notify on telegram
+        uses: appleboy/telegram-action@master
+        with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           document: ./release.zip
