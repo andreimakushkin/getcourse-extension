@@ -19,16 +19,14 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: |
-            release-$VERSION_PREFIX.zip
+          filename: release-$VERSION_PREFIX.zip
           exclusions: '*.git* /*node_modules/* .editorconfig'
       - name: Notify on telegram
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          document: |
-            ./release-$VERSION_PREFIX.zip
+          document: ./release-$VERSION_PREFIX.zip
           message: |
             ${{ github.actor }} created release:
             Version: release-$VERSION_PREFIX.zip
