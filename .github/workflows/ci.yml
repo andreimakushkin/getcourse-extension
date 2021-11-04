@@ -15,7 +15,7 @@ jobs:
         with:
           type: 'zip'
           filename: |
-            'release-${{ github.event.release.tag_name }}.zip'
+            'release-${{ github.actor }}.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
       - name: Notify on telegram
         uses: appleboy/telegram-action@master
@@ -23,7 +23,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           document: |
-            './release-${{ github.event.release.tag_name }}.zip'
+            './release-${{ github.actor }}.zip'
           message: |
             ${{ github.actor }} created release:
             Version: ${{ github.event.release.tag_name }}
