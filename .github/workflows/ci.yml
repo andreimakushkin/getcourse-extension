@@ -29,5 +29,5 @@ jobs:
           document: ./release-$VERSION_PREFIX.zip
           message: |
             ${{ github.actor }} created release:
-            Version: release-$VERSION_PREFIX.zip
+            Version: release-${{ env.VERSION_PREFIX }}.zip
 
