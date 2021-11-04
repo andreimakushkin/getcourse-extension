@@ -1,4 +1,4 @@
-name: telegram message
+name: Create release
 on:
   push:
     branches:
@@ -14,35 +14,17 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
-          filename: 'release.zip'
+          filename: |
+            'release-${{ github.event.release.tag_name }}.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
       - name: Notify on telegram
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          document: ./release.zip
+          document: |
+            './release-${{ github.event.release.tag_name }}.zip'
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
+            ${{ github.actor }} created release:
+            Version: ${{ github.event.release.tag_name }}
 
-            Repository: ${{ github.repository }}
-
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
-
-#  notify:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: send telegram message on push
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_TO }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          document: ./release.zip
-#          message: |
-#            ${{ github.actor }} created commit:
-#            Commit message: ${{ github.event.commits[0].message }}
-#
-#            Repository: ${{ github.repository }}
-#
-#            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
