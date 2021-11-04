@@ -10,19 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Archive Release
-        uses: thedoctor0/zip-release@master
+      - uses: thedoctor0/zip-release@master
+      - uses: ncipollo/release-action@v1
+      - uses: appleboy/telegram-action@master
         with:
+          artifacts: "release.tar.gz,foo/*.txt"
+          bodyFile: "body.md"
           type: 'zip'
           filename: 'release.zip'
           exclusions: '*.git* /*node_modules/* .editorconfig'
-
-  notify:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: send telegram message on push
-        uses: appleboy/telegram-action@master
-        with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           document: ./release.zip
@@ -33,3 +29,20 @@ jobs:
             Repository: ${{ github.repository }}
 
             See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+#  notify:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: send telegram message on push
+#        uses: appleboy/telegram-action@master
+#        with:
+#          to: ${{ secrets.TELEGRAM_TO }}
+#          token: ${{ secrets.TELEGRAM_TOKEN }}
+#          document: ./release.zip
+#          message: |
+#            ${{ github.actor }} created commit:
+#            Commit message: ${{ github.event.commits[0].message }}
+#
+#            Repository: ${{ github.repository }}
+#
+#            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
