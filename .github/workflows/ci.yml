@@ -11,7 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
       - name: Archive Release
-      - env:
+        env:
           VERSION_PREFIX: MyPrefix
         uses: thedoctor0/zip-release@master
         with:
