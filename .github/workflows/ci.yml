@@ -26,6 +26,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           document: ./getcourse-ext-${{ env.RELEASE_VERSION }}.zip
           message: |
-            New release of Getcourse Chrome extension was released by ${{ github.actor }}
+            New release of Getcourse Chrome Extention was released by ${{ github.actor }}
             Version: ${{ env.RELEASE_VERSION }}
 

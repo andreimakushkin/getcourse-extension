@@ -1,5 +1,3 @@
-// const iframe = document.querySelector('.vhi-iframe')
-
 const allPlayerRoots = document.querySelectorAll('.vhi-root')
 
 if (allPlayerRoots.length) {
