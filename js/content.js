@@ -1,6 +1,42 @@
-const iframe = document.querySelector('.vhi-iframe')
-if (iframe) {
-    window.open(iframe.src, '_blank').focus();
+// const iframe = document.querySelector('.vhi-iframe')
+
+const allPlayerRoots = document.querySelectorAll('.vhi-root')
+
+if (allPlayerRoots.length) {
+    const customStyle = document.createElement('style')
+
+    customStyle.innerHTML = `
+        .custom-extension-button {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            background: #efefef;
+            z-index: 1;
+            border-radius: 5px;
+            padding: 5px 10px;
+            color: #000;
+            text-decoration: none;
+            box-shadow: 14px 14px 20px -10px rgba(171, 171, 171, 1);
+        }
+        .custom-extension-button:hover,
+        .custom-extension-button:focus {
+            transition: all 0.1s;
+            background: #168de2;
+            color: #fff;
+            text-decoration: none;
+        }
+    `;
+
+    document.getElementsByTagName('head')[0].appendChild(customStyle)
+
+    allPlayerRoots.forEach(root => {
+        const link = document.createElement('a');
+        link.href = root.querySelector('.vhi-iframe').src;
+        link.target = "_blank";
+        link.classList.add('custom-extension-button');
+        link.innerText = "Открыть в новом окне";
+        root.appendChild(link);
+    })
 } else {
     const customStyle = document.createElement('style')
 
