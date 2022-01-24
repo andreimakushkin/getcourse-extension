@@ -9,7 +9,7 @@ if (allPlayerRoots.length) {
         .custom-extension-button {
             position: absolute;
             right: 20px;
-            bottom: 20px;
+            bottom: 50px;
             background: #efefef;
             z-index: 1;
             border-radius: 5px;
@@ -31,7 +31,8 @@ if (allPlayerRoots.length) {
 
     allPlayerRoots.forEach(root => {
         const link = document.createElement('a');
-        link.href = root.querySelector('.vhi-iframe').src;
+        const iframe = root.querySelector('.vhi-iframe');
+        link.href = iframe.src;
         link.target = "_blank";
         link.classList.add('custom-extension-button');
         link.innerText = "Открыть в новом окне";
